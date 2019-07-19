@@ -1,5 +1,5 @@
 # Messing with the PATH variable 
-# Lots below copied from .bash_profile:
+# below copied from .bash_profile:
   # added by Anaconda3 4.3.0 installer
   export PATH="/Users/Matt/anaconda/bin:$PATH"
 
@@ -12,6 +12,7 @@
   export PATH=$PATH:$ANDROID_HOME/tools
   export PATH=$PATH:$ANDROID_HOME/tools/bin
   export PATH=$PATH:$ANDROID_HOME/platform-tools
+
 
   export PATH=$HOME/bin:/usr/local/bin:$CONDAPATH:$PATH
 
