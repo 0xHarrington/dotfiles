@@ -35,7 +35,6 @@ ZSH_THEME_RANDOM_CANDIDATES=(
   "agnoster"
   "wezm"
   "michelebologna"
-  "powerlevel10k/powerlevel10k"
 )
 
 # Uncomment the following line to use case-sensitive completion.
