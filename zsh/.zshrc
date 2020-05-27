@@ -13,6 +13,9 @@
   export PATH=$PATH:$ANDROID_HOME/tools/bin
   export PATH=$PATH:$ANDROID_HOME/platform-tools
 
+  # Ruby path variable (for Jekyll)
+  export PATH=/usr/local/opt/ruby/bin:$PATH
+  export PATH=$HOME/.gem/ruby/2.6.0/bin:$PATH
 
   export PATH=$HOME/bin:/usr/local/bin:$CONDAPATH:$PATH
 
@@ -32,7 +35,6 @@ ZSH_THEME="random"
 # If set to an empty array, this variable will have no effect.
 ZSH_THEME_RANDOM_CANDIDATES=(
   "robbyrussell"
-  "agnoster"
   "wezm"
 )
 
@@ -119,3 +121,15 @@ source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# tabtab source for electron-forge package
+# uninstall by removing these lines or running `tabtab uninstall electron-forge`
+[[ -f /Users/Matt/Github/node_modules/tabtab/.completions/electron-forge.zsh ]] && . /Users/Matt/Github/node_modules/tabtab/.completions/electron-forge.zsh
+eval $(thefuck --alias)
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
