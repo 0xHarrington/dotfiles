@@ -78,11 +78,6 @@ map <leader>ba :bufdo bd<cr>
 map <leader>l :bnext<cr>
 map <leader>h :bprevious<cr>
 
-" Tab between buffers
-nnoremap <silent> <Tab> :bn<CR>
-nnoremap <silent> <S-Tab> :bp<CR>
-
-
 
 " ----- Useful mappings for managing tabs ----- 
 map <leader>tn :tabnew<cr>
@@ -103,7 +98,7 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 " GUI-Related Configuration 
 " ----------------------------------------------------------
 
-" ----- Terminal Mode (entered with ':temrinal') ----- 
+" ----- Terminal Mode (entered with ':terminal') ----- 
 " 'i' puts the user in typical bash mode,
 " '<C-\><C-n>' quits bash mode and puts you in Normal mode
 if has('nvim')
@@ -120,7 +115,7 @@ endif
 " General GUI stuff
 set ruler            " show the cursor position all the time
 set showcmd          " display incomplete commands
-set incsearch        " do incremental searching
+set incsearch        " Shows the match as you're typing
 set laststatus=2     " Always display the status line
 set autowrite        " Automatically :write before running commands
 set formatoptions-=t " Don't auto-break long lines (re-enable this for prose)
@@ -140,26 +135,17 @@ set listchars=tab:•\ ,trail:•,extends:»,precedes:«
 " Show matching brackets when the cursor is over one
 set showmatch
 
-" Ignore case when searching
-set ignorecase
-
 " When searching try to be smart about cases·
 set smartcase
 
 " Highlight search results
 set hlsearch
 
-" Shows the match as you're typing
-set incsearch
-
 " Don't redraw while executing macros (good performance config)
 set lazyredraw
 
 " For regular expressions turn magic on
 set magic
-
-" Fast scrolling/quicker inputs
-set ttyfast
 
 " Global tab width.
 set tabstop=2
@@ -170,18 +156,15 @@ set expandtab
 " Customize completion menu
 set completeopt=noinsert,menuone,noselect
 
-" Auto-folding all functions/content inside syntax-relevant delimeters
-" Filetypes may want to have their tailored folding style. For instance,
-" python may have a 'setl foldmethod=indent'
-setl foldmethod=syntax
-" You can close all folds with zM. 
-" Use 'zm' if you have nested folds and you want to fold level by level.
-" To open folds use zR (all) and zr (level by level).
 
 
 " ----------------------------------------------------------
 " Plugin-Related 
 " ----------------------------------------------------------
+
+" Pathogen Installing
+execute pathogen#infect()
+
 
 " ----- Vim-Plug Installation ----- 
 call plug#begin()
@@ -191,19 +174,12 @@ Plug 'sonph/onehalf', {'rtp': 'vim/'}
 Plug 'morhetz/gruvbox'
 
 Plug 'tpope/vim-surround'
-
 Plug 'w0rp/ale'
-
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'scrooloose/nerdcommenter' " see extra configs below
-
-
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
@@ -212,18 +188,20 @@ Plug 'honza/vim-snippets'
 
 Plug 'roman/golden-ratio'
 
+" Dash.app Documentation integration
+Plug 'rizzatti/dash.vim'
+
 " ----- Language-specific: ----- 
+Plug 'leafoftree/vim-vue-plugin'
 Plug 'lervag/vimtex'
 Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
-
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'elzr/vim-json'
-
 Plug 'tpope/vim-markdown'
-
 Plug 'parkr/vim-jekyll'
 Plug 'juanwolf/browserlink.vim' "Live-update for Jekyll building
+Plug 'chrisbra/csv.vim'
 
 
 call plug#end() " call 'PlugInstall' to install new plugins
@@ -241,6 +219,15 @@ autocmd Filetype tex setl updatetime=1
 let g:livepreview_previewer = 'open -a Preview'
 " Use ':LLPStartPreview' to update the preview instantaneously
 
+
+" csv.vim:
+" let g:csv_delim=','
+
+
+" Vim-Vue highlighting for SCSS and PUG
+let g:vue_pre_processors = ['pug', 'scss']
+autocmd BufRead,BufNewFile *.vue setf vue
+syntax sync fromstart
 
 " Deoplete 
 let g:deoplete#enable_at_startup = 1
@@ -292,7 +279,6 @@ let g:UltiSnipsSnippetDirectories = ['UltiSnips', $HOME.'/.config/UltiSnips']
 let g:UltiSnipsEnableSnipMate = 0
 
 
-
 " ----- Nerd Tree -----  
 let g:NERDTreeWinPos = "left"
 let NERDTreeShowHidden=0
@@ -302,8 +288,6 @@ map <leader>nn :NERDTreeToggle<cr>
 map <leader>nf :NERDTreeFind<cr>
 
 " from medium post on how to make nerd tree better
-nnoremap <Leader>f :NERDTreeToggle<Enter>
-nnoremap <silent> <Leader>v :NERDTreeFind<CR>
 autocmd StdinReadPre * let s:std_in=1
 let NERDTreeAutoDeleteBuffer = 1
 let NERDTreeQuitOnOpen = 1
@@ -317,8 +301,15 @@ function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
   exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
 endfunction
 
+" openning nerdtree when starting nvim with no file args
+let g:nerdtree_tabs_open_on_gui_startup=0
 
-" ---- NERD Commenter ----
+
+" ------------ NERD Commenter ------------
+"  Some default mappings:
+"  [count]<leader>c<space>  |NERDCommenterToggle|
+"  [count]<leader>cs        |NERDCommenterSexy|
+
 " dd spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
 
@@ -344,9 +335,9 @@ let g:NERDToggleCheckAllLines = 1
 " colorscheme-related 
 " ----------------------------------------------------------
 
-if has("linux")
+if has("unix")
   set gfn=IBM\ Plex\ Mono:h14,:Hack\ 14,Source\ Code\ Pro\ 12,Bitstream\ Vera\ Sans\ Mono\ 11
-elseif has("unix")
+elseif has("linux")
   set gfn=Monospace\ 11
 endif
 
@@ -374,22 +365,6 @@ endtry
 "Sets colorscheme dark mode"
 set bg=dark
 
-" fzf - terminal fuzzy finding - colorscheme (made to match gruvbox)
-let g:fzf_colors = {
-      \ 'fg':      ['fg', 'GruvboxGray'],
-      \ 'bg':      ['bg', 'Normal'],
-      \ 'hl':      ['fg', 'GruvboxRed'],
-      \ 'fg+':     ['fg', 'GruvboxGreen'],
-      \ 'bg+':     ['bg', 'GruvboxBg1'],
-      \ 'hl+':     ['fg', 'GruvboxRed'],
-      \ 'info':    ['fg', 'GruvboxOrange'],
-      \ 'prompt':  ['fg', 'GruvboxBlue'],
-      \ 'header':  ['fg', 'GruvboxBlue'],
-      \ 'pointer': ['fg', 'Error'],
-      \ 'marker':  ['fg', 'Error'],
-      \ 'spinner': ['fg', 'Statement'],
-      \ }
-
 
 " ----------------------------------------------------------
 " Code snippets / hotkeys
@@ -397,31 +372,38 @@ let g:fzf_colors = {
 
 " ----- Universal ----- 
 
-" Navigating with Luke Smith's guide character
-inoremap <leader><leader> <Esc>/<++><Enter>"_c4l
-vnoremap <leader><leader> <Esc>/<++><Enter>"_c4l
-map <leader><leader> <Esc>/<++><Enter>"_c4l<Paste>
-
-autocmd Filetype vim setl foldmethod=syntax
-
-
-" ----- LANGAUGE ----- 
-
-augroup lang_settings
-  autocmd!
-  "   autocmd BufNewFile,BufRead *.xxx set tw=20
-augroup END
-
-
-" ----- LANGAUGE ----- 
-
-augroup lang_settings
-  autocmd!
-  "   autocmd BufNewFile,BufRead *.xxx set tw=20
-augroup END
-
+" " Navigating with Luke Smith's guide character
+" inoremap <leader><leader> <Esc>/<++><Enter>"_c4l
+" vnoremap <leader><leader> <Esc>/<++><Enter>"_c4l
+" map <leader><leader> <Esc>/<++><Enter>"_c4l<Paste>
 
 
 " ----------------------------------------------------------
-" SECTION TITLE
+" Automatic File-level Folding Control
 " ----------------------------------------------------------
+
+" Auto-folding all functions/content inside syntax-relevant delimeters
+" Filetypes may want to have their tailored folding style. For instance,
+" python may have a 'setl foldmethod=indent'
+setl foldmethod=indent
+" You can close all folds with zM. 
+" Use 'zm' if you have nested folds and you want to fold level by level.
+" To open folds use zR (all) and zr (level by level).
+
+" The below is stolen from vi.stackexchange. Should allow for fold recognition
+augroup AutoSaveFolds
+  autocmd!
+  " view files are about 500 bytes
+  " bufleave but not bufwinleave captures closing 2nd tab
+  " nested is needed by bufwrite* (if triggered via other autocmd)
+  autocmd BufWinLeave,BufLeave,BufWritePost ?* nested silent! mkview!
+  autocmd BufWinEnter ?* silent! loadview
+augroup end
+
+autocmd Filetype python   setlocal foldmethod=indent
+autocmd FileType html     setlocal foldmethod=syntax
+autocmd FileType json     setlocal foldmethod=syntax
+autocmd Filetype vim      setlocal foldmethod=indent
+autocmd FileType jsx      setlocal foldmethod=syntax
+autocmd FileType js       setlocal foldmethod=syntax
+"autocmd BufNewFile,BufRead *.vue set syntax=js
