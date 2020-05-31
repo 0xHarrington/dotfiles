@@ -173,6 +173,12 @@ call plug#begin()
 Plug 'sonph/onehalf', {'rtp': 'vim/'}
 Plug 'morhetz/gruvbox'
 
+"Autocomplete
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+Plug 'junegunn/fzf', { 'do': { -> fzf#install()) } }
+Plug 'junegunn/fzf'
+
 Plug 'tpope/vim-surround'
 Plug 'w0rp/ale'
 Plug 'scrooloose/nerdtree'
@@ -222,6 +228,13 @@ let g:livepreview_previewer = 'open -a Preview'
 
 " csv.vim:
 " let g:csv_delim=','
+
+" go-to definition
+nmap <leader>gd <Plug>(coc-definition)
+nmap <leader>gr <Plug>(coc-references)
+nnoremap <C-p> :GFiles<CR>
+" note Ctr-^ takes you to the file you were last inside
+
 
 
 " Vim-Vue highlighting for SCSS and PUG
