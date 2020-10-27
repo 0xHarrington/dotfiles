@@ -174,9 +174,9 @@ Plug 'sonph/onehalf', {'rtp': 'vim/'}
 Plug 'morhetz/gruvbox'
 
 "Autocomplete
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-Plug 'junegunn/fzf', { 'do': { -> fzf#install()) } }
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf'
 
 Plug 'tpope/vim-surround'
@@ -185,12 +185,13 @@ Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'scrooloose/nerdcommenter' " see extra configs below
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
+" Commenting out to try coc
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+
 Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
 
 Plug 'roman/golden-ratio'
 
@@ -201,10 +202,16 @@ Plug 'rizzatti/dash.vim'
 Plug 'leafoftree/vim-vue-plugin'
 Plug 'lervag/vimtex'
 Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
+
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'elzr/vim-json'
-Plug 'tpope/vim-markdown'
+
+" https://github.com/iamcco/markdown-preview.nvim
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
+" Plug 'tpope/vim-markdown'
+Plug 'vim-pandoc/vim-pandoc-syntax'
+
 Plug 'parkr/vim-jekyll'
 Plug 'juanwolf/browserlink.vim' "Live-update for Jekyll building
 Plug 'chrisbra/csv.vim'
@@ -224,6 +231,12 @@ let g:vimtex_compiler_progname = 'nvr'
 autocmd Filetype tex setl updatetime=1
 let g:livepreview_previewer = 'open -a Preview'
 " Use ':LLPStartPreview' to update the preview instantaneously
+
+
+" vim-pandoc syntax highlighting
+augroup pandoc_syntax
+    au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
+augroup END
 
 
 " csv.vim:
@@ -290,6 +303,7 @@ let g:UltiSnipsJumpBackwardTrigger = "<c-tab>"
 let g:UltiSnipsSnippetsDir = $HOME."/.config/UltiSnips"
 let g:UltiSnipsSnippetDirectories = ['UltiSnips', $HOME.'/.config/UltiSnips']
 let g:UltiSnipsEnableSnipMate = 0
+nnoremap <c-m> :MarkdownPreview<CR>
 
 
 " ----- Nerd Tree -----  
@@ -384,12 +398,6 @@ set bg=dark
 " ----------------------------------------------------------
 
 " ----- Universal ----- 
-
-" " Navigating with Luke Smith's guide character
-" inoremap <leader><leader> <Esc>/<++><Enter>"_c4l
-" vnoremap <leader><leader> <Esc>/<++><Enter>"_c4l
-" map <leader><leader> <Esc>/<++><Enter>"_c4l<Paste>
-
 
 " ----------------------------------------------------------
 " Automatic File-level Folding Control
