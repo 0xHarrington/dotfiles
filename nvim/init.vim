@@ -16,6 +16,7 @@ set autoread
 
 " Map <leader> to the comma key
 let mapleader = ","
+let maplocalleader = ",,"
 
 " Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
 map <space> /
@@ -75,8 +76,8 @@ map <leader>bd :bdelete<cr>:tabclose<cr>gT
 map <leader>ba :bufdo bd<cr>
 
 " Switch between buffers quickly
-map <leader>l :bnext<cr>
-map <leader>h :bprevious<cr>
+" map <leader>l :bnext<cr>
+" map <leader>h :bprevious<cr>
 
 
 " ----- Useful mappings for managing tabs ----- 
@@ -156,8 +157,6 @@ set expandtab
 " Customize completion menu
 set completeopt=noinsert,menuone,noselect
 
-
-
 " ----------------------------------------------------------
 " Plugin-Related 
 " ----------------------------------------------------------
@@ -192,6 +191,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
 Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 
 Plug 'roman/golden-ratio'
 
@@ -206,10 +206,7 @@ Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'elzr/vim-json'
-
-" https://github.com/iamcco/markdown-preview.nvim
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
-" Plug 'tpope/vim-markdown'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 
 Plug 'parkr/vim-jekyll'
@@ -219,14 +216,26 @@ Plug 'chrisbra/csv.vim'
 
 call plug#end() " call 'PlugInstall' to install new plugins
 
+" Python configuration
+let g:loaded_python_provider = 0
 
 " ---- Plugin Configuration -----
-" Vimtex 
+
+" Vimtex (https://castel.dev/post/lecture-notes-1/)
 let g:tex_flavor='latex'
+let g:vimtex_view_automatic=1
+let g:vimtex_view_method='zathura'
 let g:vimtex_quickfix_mode=0
 set conceallevel=1
 let g:tex_conceal='abdmg'
-let g:vimtex_compiler_progname = 'nvr'
+" From this guy's init.vim: https://wraihan.com/posts/vimtex-and-zathura/
+let g:vimtex_fold_enabled = 0
+let g:vimtex_indent_enabled = 1
+let g:vimtex_complete_recursive_bib = 0
+let g:vimtex_complete_close_braces = 1
+let g:vimtex_quickfix_mode = 2
+let g:vimtex_quickfix_open_on_warning = 1
+
 " https://medium.com/rahasak/vim-as-my-latex-editor-f0c5d60c66fa
 autocmd Filetype tex setl updatetime=1
 let g:livepreview_previewer = 'open -a Preview'
@@ -238,6 +247,8 @@ augroup pandoc_syntax
     au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
 augroup END
 
+" do not close the markdown preview tab when switching to other buffers
+let g:mkdp_auto_close = 0
 
 " csv.vim:
 " let g:csv_delim=','
@@ -421,7 +432,9 @@ augroup AutoSaveFolds
   autocmd BufWinEnter ?* silent! loadview
 augroup end
 
+autocmd FileType python   compiler pylint
 autocmd Filetype python   setlocal foldmethod=indent
+
 autocmd FileType html     setlocal foldmethod=syntax
 autocmd FileType json     setlocal foldmethod=syntax
 autocmd Filetype vim      setlocal foldmethod=indent
