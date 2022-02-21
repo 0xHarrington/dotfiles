@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ############################
 ##### Path Manaement!! #####
 ############################
@@ -40,6 +41,21 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+=======
+# Messing with the PATH variable 
+# below copied from .bash_profile:
+
+# Relevant android develpment paths for react native development
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/tools/bin
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+
+# Ruby path variable (for Jekyll)
+export PATH=/usr/local/opt/ruby/bin:$PATH
+export PATH=$HOME/.gem/ruby/2.6.0/bin:$PATH
+>>>>>>> ac0402cc63a8ab2779e689b4152be2f2d99517b9
 
 
 # Set name of the theme to load --- if set to "random", it will
@@ -105,6 +121,33 @@ ZSH_THEME_RANDOM_CANDIDATES=(
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
+
+# to
+
+# Setting to true per the reccomendation, since I was getting the following errors:
+    # drwxr-xr-x  7 502  admin  224 Aug 18 17:28 /usr/local/share/zsh
+    # drwxr-xr-x  6 502  admin  192 Oct  6 13:24 /usr/local/share/zsh/site-functions
+    # lrwxr-xr-x  1 502  admin   39 Sep 25  2016 /usr/local/share/zsh/site-functions/_brew -> ../../../Homebrew/completions/zsh/_brew
+    # lrwxr-xr-x  1 502  admin   88 May  5  2020 /usr/local/share/zsh/site-functions/_brew_services -> ../../../Homebrew/Library/Taps/homebrew/homebrew-services/completions/zsh/_brew_services
+    # lrwxr-xr-x  1 502  admin   60 Jan 28  2021 /usr/local/share/zsh/site-functions/_ninja -> ../../../Cellar/ninja/1.10.2/share/zsh/site-functions/_ninja
+    # lrwxr-xr-x  1 502  admin   74 Mar 12  2019 /usr/local/share/zsh/site-functions/_youtube-dl -> ../../../Cellar/youtube-dl/2019.03.09/share/zsh/site-functions/_youtube-dl
+    #
+    # [oh-my-zsh] For safety, we will not load completions from these directories until
+    # [oh-my-zsh] you fix their permissions and ownership and restart zsh.
+    # [oh-my-zsh] See the above list for directories with group or other writability.
+    #
+    # [oh-my-zsh] To fix your permissions you can do so by disabling
+    # [oh-my-zsh] the write permission of "group" and "others" and making sure that the
+    # [oh-my-zsh] owner of these directories is either root or your current user.
+    # [oh-my-zsh] The following command may help:
+    # [oh-my-zsh]     compaudit | xargs chmod g-w,o-w
+    #
+    # [oh-my-zsh] If the above didn't help or you want to skip the verification of
+    # [oh-my-zsh] insecure directories you can set the variable ZSH_DISABLE_COMPFIX to
+    # [oh-my-zsh] "true" before oh-my-zsh is sourced in your zshrc file.
+
+ZSH_DISABLE_COMPFIX="true"
+
 # Which plugins would you like to load?
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
@@ -164,3 +207,42 @@ eval $(thefuck --alias)
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 
+<<<<<<< HEAD
+=======
+############################
+##### Path Manaement!! #####
+############################
+
+# From post about how to reset python install
+# https://gist.github.com/MuhsinFatih/ee0154199803babb449b5bb98d3475f7
+export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
+export PATH="/usr/local/opt/python@2/libexec/bin:$PATH"
+
+# GOPATH setup
+export GOPATH=$HOME/go
+
+# Node versiion manager
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+
+# From the vimtex docs on Zathura for MacOS
+export DBUS_SESSION_BUS_ADDRESS="unix:path=$DBUS_LAUNCHD_SESSION_BUS_SOCKET"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/matt/opt/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/matt/opt/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/matt/opt/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/matt/opt/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+>>>>>>> ac0402cc63a8ab2779e689b4152be2f2d99517b9
