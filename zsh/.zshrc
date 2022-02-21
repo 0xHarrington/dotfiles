@@ -1,33 +1,53 @@
-# Messing with the PATH variable 
-# below copied from .bash_profile:
-  # added by Anaconda3 4.3.0 installer
-  export PATH="/Users/Matt/anaconda/bin:$PATH"
+############################
+##### Path Manaement!! #####
+############################
 
-  # added by Anaconda3 4.3.0 installer
-  export PATH="/Users/Matt/anaconda3/bin:$PATH"
+# From post about how to reset python install
+# https://gist.github.com/MuhsinFatih/ee0154199803babb449b5bb98d3475f7
+export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
+export PATH="/usr/local/opt/python@2/libexec/bin:$PATH"
 
-  # Relevant android develpment paths for react native development
-  export ANDROID_HOME=$HOME/Library/Android/sdk
-  export PATH=$PATH:$ANDROID_HOME/emulator
-  export PATH=$PATH:$ANDROID_HOME/tools
-  export PATH=$PATH:$ANDROID_HOME/tools/bin
-  export PATH=$PATH:$ANDROID_HOME/platform-tools
-
-  # Ruby path variable (for Jekyll)
-  export PATH=/usr/local/opt/ruby/bin:$PATH
-  export PATH=$HOME/.gem/ruby/2.6.0/bin:$PATH
-
-  export PATH=$HOME/bin:/usr/local/bin:$CONDAPATH:$PATH
-
+# Ruby path variable (for Jekyll)
+export PATH=/usr/local/opt/ruby/bin:$PATH
+export PATH=$HOME/.gem/ruby/2.6.0/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/Matt/.oh-my-zsh"
+
+# GOLANG PATH
+export PATH=$PATH:/Users/Matt/go:/Users/Matt/go/bin
+export GOPATH=/Users/Matt/go
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+
+# From the vimtex docs on Zathura for MacOS
+export DBUS_SESSION_BUS_ADDRESS="unix:path=$DBUS_LAUNCHD_SESSION_BUS_SOCKET"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/Matt/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/Matt/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/Matt/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/Matt/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="random"
+ZSH_THEME="wezm"
+# ZSH_THEME="random"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -95,7 +115,6 @@ plugins=(git)
 source $ZSH/oh-my-zsh.sh
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -122,14 +141,26 @@ source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+############################
+###### Aliasses!! ######
+############################
+
+alias lsa='ls -la'
+alias zshrc='nvim ~/.zshrc'
+alias nvimrc='nvim ~/.config/nvim/init.vim'
+alias gits='git status'
+alias gitm='git commit -m'
+alias gitp='git push'
+alias gita='git add'
+
+alias pip='pip3'
+alias python='python3'
+
 # tabtab source for electron-forge package
 # uninstall by removing these lines or running `tabtab uninstall electron-forge`
-[[ -f /Users/Matt/Github/node_modules/tabtab/.completions/electron-forge.zsh ]] && . /Users/Matt/Github/node_modules/tabtab/.completions/electron-forge.zsh
+# [[ -f /Users/Matt/Github/node_modules/tabtab/.completions/electron-forge.zsh ]] && . /Users/Matt/Github/node_modules/tabtab/.completions/electron-forge.zsh
 eval $(thefuck --alias)
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

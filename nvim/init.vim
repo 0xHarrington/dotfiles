@@ -213,6 +213,8 @@ Plug 'parkr/vim-jekyll'
 Plug 'juanwolf/browserlink.vim' "Live-update for Jekyll building
 Plug 'chrisbra/csv.vim'
 
+Plug 'tomlion/vim-solidity'
+
 
 call plug#end() " call 'PlugInstall' to install new plugins
 
@@ -246,6 +248,9 @@ let g:livepreview_previewer = 'open -a Preview'
 augroup pandoc_syntax
     au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
 augroup END
+
+" vim-solidity syntax highlighting
+au BufNewFile,BufRead *.sol setf solidity
 
 " do not close the markdown preview tab when switching to other buffers
 let g:mkdp_auto_close = 0
