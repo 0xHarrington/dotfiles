@@ -38,13 +38,13 @@ set spelllang=en_us
 " Hotkey for fixing indentation in the file
 map <leader>i mmgg=G`m<CR>
 
-" 'gdefault' applies substitutions globally on lines. 
+" 'gdefault' applies substitutions globally on lines.
 " For example, instead of :%s/foo/bar/g you just type :%s/foo/bar/
 set gdefault
 
 
 " ----------------------------------------------------------
-" Moving around the editor 
+" Moving around the editor
 " ----------------------------------------------------------
 
 " Disable arrow keys in normal mode
@@ -61,13 +61,16 @@ set relativenumber
 " Force X lines above/below cursor when scrolling with j/k
 set so=5
 
+" Enable mouse clicking support
+set mouse=a
+
 " Smart way to move between windows
 map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
-" ----- Useful Buffer Manipulations ----- 
+" ----- Useful Buffer Manipulations -----
 
 " Close the current buffer
 map <leader>bd :bdelete<cr>:tabclose<cr>gT
@@ -80,7 +83,7 @@ map <leader>ba :bufdo bd<cr>
 " map <leader>h :bprevious<cr>
 
 
-" ----- Useful mappings for managing tabs ----- 
+" ----- Useful mappings for managing tabs -----
 map <leader>tn :tabnew<cr>
 map <leader>to :tabonly<cr>
 map <leader>tc :tabclose<cr>
@@ -96,10 +99,10 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 
 
 " ----------------------------------------------------------
-" GUI-Related Configuration 
+" GUI-Related Configuration
 " ----------------------------------------------------------
 
-" ----- Terminal Mode (entered with ':terminal') ----- 
+" ----- Terminal Mode (entered with ':terminal') -----
 " 'i' puts the user in typical bash mode,
 " '<C-\><C-n>' quits bash mode and puts you in Normal mode
 if has('nvim')
@@ -131,7 +134,7 @@ set guioptions-=L
 " Display unprintable characters f12 - switches (displays symbol for spaces)
 set list
 " Unprintable chars mapping syntax
-set listchars=tab:•\ ,trail:•,extends:»,precedes:« 
+set listchars=tab:•\ ,trail:•,extends:»,precedes:«
 
 " Show matching brackets when the cursor is over one
 set showmatch
@@ -158,14 +161,10 @@ set expandtab
 set completeopt=noinsert,menuone,noselect
 
 " ----------------------------------------------------------
-" Plugin-Related 
+" Plugin-Related
 " ----------------------------------------------------------
 
-" Pathogen Installing
-execute pathogen#infect()
-
-
-" ----- Vim-Plug Installation ----- 
+" ----- Vim-Plug Installation -----
 call plug#begin()
 
 " Syntax highlighting and colorschemes
@@ -173,7 +172,7 @@ Plug 'sonph/onehalf', {'rtp': 'vim/'}
 Plug 'morhetz/gruvbox'
 
 "Autocomplete
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf'
@@ -187,9 +186,6 @@ Plug 'scrooloose/nerdcommenter' " see extra configs below
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-" Commenting out to try coc
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
@@ -198,23 +194,15 @@ Plug 'roman/golden-ratio'
 " Dash.app Documentation integration
 Plug 'rizzatti/dash.vim'
 
-" ----- Language-specific: ----- 
+" ----- Language-specific: -----
 Plug 'leafoftree/vim-vue-plugin'
-Plug 'lervag/vimtex'
-Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
-
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'elzr/vim-json'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 Plug 'vim-pandoc/vim-pandoc-syntax'
 
-Plug 'parkr/vim-jekyll'
-Plug 'juanwolf/browserlink.vim' "Live-update for Jekyll building
-Plug 'chrisbra/csv.vim'
-
 Plug 'tomlion/vim-solidity'
-
 
 call plug#end() " call 'PlugInstall' to install new plugins
 
@@ -223,25 +211,11 @@ let g:loaded_python_provider = 0
 
 " ---- Plugin Configuration -----
 
-" Vimtex (https://castel.dev/post/lecture-notes-1/)
-let g:tex_flavor='latex'
-let g:vimtex_view_automatic=1
-let g:vimtex_view_method='zathura'
-let g:vimtex_quickfix_mode=0
-set conceallevel=1
-let g:tex_conceal='abdmg'
-" From this guy's init.vim: https://wraihan.com/posts/vimtex-and-zathura/
-let g:vimtex_fold_enabled = 0
-let g:vimtex_indent_enabled = 1
-let g:vimtex_complete_recursive_bib = 0
-let g:vimtex_complete_close_braces = 1
-let g:vimtex_quickfix_mode = 2
-let g:vimtex_quickfix_open_on_warning = 1
-
-" https://medium.com/rahasak/vim-as-my-latex-editor-f0c5d60c66fa
-autocmd Filetype tex setl updatetime=1
-let g:livepreview_previewer = 'open -a Preview'
-" Use ':LLPStartPreview' to update the preview instantaneously
+" Actually configuring vim-ale linting and auto-fixing
+let b:ale_fixers = ['prettier', 'eslint']
+let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace'],}
+" Automatically fix on save
+let g:ale_fix_on_save = 1
 
 
 " vim-pandoc syntax highlighting
@@ -255,25 +229,16 @@ au BufNewFile,BufRead *.sol setf solidity
 " do not close the markdown preview tab when switching to other buffers
 let g:mkdp_auto_close = 0
 
-" csv.vim:
-" let g:csv_delim=','
-
 " go-to definition
 nmap <leader>gd <Plug>(coc-definition)
 nmap <leader>gr <Plug>(coc-references)
 nnoremap <C-p> :GFiles<CR>
 " note Ctr-^ takes you to the file you were last inside
 
-
-
 " Vim-Vue highlighting for SCSS and PUG
 let g:vue_pre_processors = ['pug', 'scss']
 autocmd BufRead,BufNewFile *.vue setf vue
 syntax sync fromstart
-
-" Deoplete 
-let g:deoplete#enable_at_startup = 1
-
 
 " Vim-Airline, status bar configuration
 let g:airline_theme='gruvbox'
@@ -322,7 +287,7 @@ let g:UltiSnipsEnableSnipMate = 0
 nnoremap <c-m> :MarkdownPreview<CR>
 
 
-" ----- Nerd Tree -----  
+" ----- Nerd Tree -----
 let g:NERDTreeWinPos = "left"
 let NERDTreeShowHidden=0
 let NERDTreeIgnore = ['\.pyc$', '__pycache__']
@@ -371,11 +336,11 @@ let g:NERDCommentEmptyLines = 1
 " Enable trimming of trailing whitespace when uncommenting
 let g:NERDTrimTrailingWhitespace = 1
 
-" Enable NERDCommenterToggle to check all selected lines is commented or not 
+" Enable NERDCommenterToggle to check all selected lines is commented or not
 let g:NERDToggleCheckAllLines = 1
 
 " ----------------------------------------------------------
-" colorscheme-related 
+" colorscheme-related
 " ----------------------------------------------------------
 
 if has("unix")
@@ -413,7 +378,7 @@ set bg=dark
 " Code snippets / hotkeys
 " ----------------------------------------------------------
 
-" ----- Universal ----- 
+" ----- Universal -----
 
 " ----------------------------------------------------------
 " Automatic File-level Folding Control
@@ -423,7 +388,7 @@ set bg=dark
 " Filetypes may want to have their tailored folding style. For instance,
 " python may have a 'setl foldmethod=indent'
 setl foldmethod=indent
-" You can close all folds with zM. 
+" You can close all folds with zM.
 " Use 'zm' if you have nested folds and you want to fold level by level.
 " To open folds use zR (all) and zr (level by level).
 
@@ -438,11 +403,10 @@ augroup AutoSaveFolds
 augroup end
 
 autocmd FileType python   compiler pylint
-autocmd Filetype python   setlocal foldmethod=indent
-
+autocmd Filetype python   setlocal foldmethod=syntax
 autocmd FileType html     setlocal foldmethod=syntax
 autocmd FileType json     setlocal foldmethod=syntax
 autocmd Filetype vim      setlocal foldmethod=indent
 autocmd FileType jsx      setlocal foldmethod=syntax
 autocmd FileType js       setlocal foldmethod=syntax
-"autocmd BufNewFile,BufRead *.vue set syntax=js
+autocmd BufNewFile,BufRead *.vue set syntax
