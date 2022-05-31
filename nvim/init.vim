@@ -174,20 +174,21 @@ Plug 'morhetz/gruvbox'
 "Autocomplete
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+" Editing features
+Plug 'scrooloose/nerdcommenter' " see extra configs below
+Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf'
-
-Plug 'tpope/vim-surround'
-Plug 'scrooloose/nerdtree'
-Plug 'jistr/vim-nerdtree-tabs'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'scrooloose/nerdcommenter' " see extra configs below
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
+" GUI additions and navigation
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'scrooloose/nerdtree'
+Plug 'jistr/vim-nerdtree-tabs'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'ryanoasis/vim-devicons'
 Plug 'roman/golden-ratio'
 
 " Dash.app Documentation integration
