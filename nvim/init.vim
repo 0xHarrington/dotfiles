@@ -199,10 +199,10 @@ Plug 'leafoftree/vim-vue-plugin'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'elzr/vim-json'
+Plug 'chrisbra/csv.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 Plug 'vim-pandoc/vim-pandoc-syntax'
 
-Plug 'tomlion/vim-solidity'
 
 call plug#end() " call 'PlugInstall' to install new plugins
 
