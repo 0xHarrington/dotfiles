@@ -35,8 +35,7 @@ Now you can create any custom environments you want using `conda create -n ENV_N
 
 ```bash
 conda activate ENV_NAME
-pip3 install pynvim jedi
-pip install -U jedi-language-server
+pip3 install pynvim
 ```
 
 Now that we've got python and Linux packages installed, use `curl` to install Vim-Plug for downloading and configuring our plugins:
@@ -46,4 +45,34 @@ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 ```
 
-Once installed, you can launch nvim and run `:PlugInstall`. Edit this README for any steps that I forgot to add!
+Once installed, you can launch nvim and run `:PlugInstall`.
+
+## Coc.nvim
+
+| Note that both Deoplete and CoC require using NeoVim over vim (we love asynchronous execution here)
+
+I've recently replaced Deoplete with [Conquer of Completion](https://github.com/neoclide/coc.nvim) as my autocomplete and formatting solution. Unfortunately, there's a fair amount of legwork necessary to get it working. Note that I've only set up Coc for python formatting, so your milage may vary given the demands of other development environments. Hopefully this will be an effective starting point for you.
+
+Firstly, install the necessary dependencies to your envronment.
+
+```bash
+conda activate ENV_NAME
+conda install black pylint
+```
+
+Now open up NeoVim and run `:CocInstall pyright`. This should give you some prompts, as well as create a `.vim/coc-settings.json` file. Open that, and make sure it looks like the following:
+
+```json
+{
+  "coc.preferences.formatOnSaveFiletypes": ["python"],
+  "python.formatting.provider": "black",
+  "python.formatting.blackPath": "~/.miniconda/envs/[ENV_NAME]/bin/black",
+  "python.linting.pylintPath": "~/.miniconda/envs/[ENV_NAME]/bin/pylint",
+  "python.linting.pylintEnabled": true,
+  "python.linting.enabled": true
+}
+```
+
+Where `ENV_NAME` is the name of your conda environment. Re-open NeoVim, and run `:CocRebuild` to reset the extension. That should work...
+
+***Edit this README for any steps that I forgot to add!***
