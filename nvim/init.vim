@@ -59,7 +59,7 @@ set numberwidth=3
 set relativenumber
 
 " Force X lines above/below cursor when scrolling with j/k
-set so=5
+set so=10
 
 " Enable mouse clicking support
 set mouse=a
@@ -152,9 +152,9 @@ set lazyredraw
 set magic
 
 " Global tab width.
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
 set expandtab
 
 " Customize completion menu
@@ -178,7 +178,6 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf'
 
 Plug 'tpope/vim-surround'
-Plug 'w0rp/ale'
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -211,13 +210,6 @@ let g:loaded_python_provider = 0
 
 " ---- Plugin Configuration -----
 
-" Actually configuring vim-ale linting and auto-fixing
-let b:ale_fixers = ['prettier', 'eslint']
-let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace'],}
-" Automatically fix on save
-let g:ale_fix_on_save = 1
-
-
 " vim-pandoc syntax highlighting
 augroup pandoc_syntax
     au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
@@ -243,7 +235,6 @@ syntax sync fromstart
 " Vim-Airline, status bar configuration
 let g:airline_theme='gruvbox'
 let g:airline#extensions#branch#enabled = 1
-let g:airline#extensions#ale#enabled = 1
 let g:airline_skip_empty_sections = 1
 
 " Custom Airline theming
@@ -284,7 +275,9 @@ let g:UltiSnipsJumpBackwardTrigger = "<c-tab>"
 let g:UltiSnipsSnippetsDir = $HOME."/.config/UltiSnips"
 let g:UltiSnipsSnippetDirectories = ['UltiSnips', $HOME.'/.config/UltiSnips']
 let g:UltiSnipsEnableSnipMate = 0
-nnoremap <c-m> :MarkdownPreview<CR>
+
+" Easy MarkdownPreview
+autocmd FileType md nnoremap <c-m> :MarkdownPreview<CR>
 
 
 " ----- Nerd Tree -----
@@ -403,7 +396,7 @@ augroup AutoSaveFolds
 augroup end
 
 autocmd FileType python   compiler pylint
-autocmd Filetype python   setlocal foldmethod=syntax
+autocmd Filetype python   setlocal foldmethod=indent
 autocmd FileType html     setlocal foldmethod=syntax
 autocmd FileType json     setlocal foldmethod=syntax
 autocmd Filetype vim      setlocal foldmethod=indent
