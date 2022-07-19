@@ -178,7 +178,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'scrooloose/nerdcommenter' " see extra configs below
 Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf'
+Plug 'luochen1990/rainbow'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
@@ -195,6 +195,7 @@ Plug 'roman/golden-ratio'
 Plug 'rizzatti/dash.vim'
 
 " ----- Language-specific: -----
+Plug 'sheerun/vim-polyglot'
 Plug 'leafoftree/vim-vue-plugin'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
@@ -211,13 +212,19 @@ let g:loaded_python_provider = 0
 
 " ---- Plugin Configuration -----
 
+" Rainbow parenthesis
+let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
+
+" Easy MarkdownPreview
+autocmd FileType md nnoremap <c-m> :MarkdownPreview<CR>
+
+" Toggle goldenratio
+nnoremap <leader>tg :GoldenRatioToggle<CR>
+
 " vim-pandoc syntax highlighting
 augroup pandoc_syntax
     au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
 augroup END
-
-" vim-solidity syntax highlighting
-au BufNewFile,BufRead *.sol setf solidity
 
 " do not close the markdown preview tab when switching to other buffers
 let g:mkdp_auto_close = 0
@@ -225,7 +232,7 @@ let g:mkdp_auto_close = 0
 " go-to definition
 nmap <leader>gd <Plug>(coc-definition)
 nmap <leader>gr <Plug>(coc-references)
-nnoremap <C-p> :GFiles<CR>
+nnoremap <leader>cr :CocRestart<CR>
 " note Ctr-^ takes you to the file you were last inside
 
 " Vim-Vue highlighting for SCSS and PUG
@@ -276,10 +283,6 @@ let g:UltiSnipsJumpBackwardTrigger = "<c-tab>"
 let g:UltiSnipsSnippetsDir = $HOME."/.config/UltiSnips"
 let g:UltiSnipsSnippetDirectories = ['UltiSnips', $HOME.'/.config/UltiSnips']
 let g:UltiSnipsEnableSnipMate = 0
-
-" Easy MarkdownPreview
-autocmd FileType md nnoremap <c-m> :MarkdownPreview<CR>
-
 
 " ----- Nerd Tree -----
 let g:NERDTreeWinPos = "left"
