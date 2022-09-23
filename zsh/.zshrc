@@ -1,9 +1,11 @@
-############################
-##### Path Manaement!! #####
-############################
+##########################
+##### Path Manaement #####
+##########################
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
+# Need to disable compfix before sourcing oh-my-zsh for...reasons
+ZSH_DISABLE_COMPFIX="true"
 source $ZSH/oh-my-zsh.sh
 
 # ooo man pages
@@ -33,7 +35,7 @@ unset __conda_setup
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="random"
-ZSH_THEME_RANDOM_CANDIDATES=("eastwood", "gnzh", "terminalparty")
+ZSH_THEME_RANDOM_CANDIDATES=("eastwood" "gnzh" "wezm" "terminalparty")
 
 # Uncomment the following line to automatically update without prompting.
 # DISABLE_UPDATE_PROMPT="true"
@@ -65,8 +67,6 @@ ZSH_THEME_RANDOM_CANDIDATES=("eastwood", "gnzh", "terminalparty")
 # or set a custom format using the strftime function format specifications,
 # see 'man strftime' for details.
 # HIST_STAMPS="mm/dd/yyyy"
-
-ZSH_DISABLE_COMPFIX="true"
 
 # Which plugins would you like to load?
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
