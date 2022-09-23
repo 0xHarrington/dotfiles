@@ -4,10 +4,6 @@
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
-# Need to disable compfix before sourcing oh-my-zsh for...reasons
-ZSH_DISABLE_COMPFIX="true"
-source $ZSH/oh-my-zsh.sh
-
 # ooo man pages
 export MANPATH="/usr/local/man:$MANPATH"
 
@@ -84,7 +80,11 @@ plugins=(
     zsh-syntax-highlighting
 )
 
-# source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# Need to disable compfix before sourcing oh-my-zsh for...reasons
+ZSH_DISABLE_COMPFIX="true"
+
+# Finally source the oh-my-zsh script
+source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
