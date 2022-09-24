@@ -115,6 +115,7 @@ fi
 alias lsa='ls -la'
 alias zshrc='nvim ~/.zshrc'
 alias nvimrc='nvim ~/.config/nvim/init.vim'
+
 alias gits='git status'
 alias gitm='git commit -m'
 alias gitp='git push'
@@ -122,6 +123,9 @@ alias gita='git add'
 
 alias pip='pip3'
 alias python='python3'
+
+alias pipes='pipes.sh'
+alias pipe='pipes.sh'
 
 # tabtab source for electron-forge package
 # uninstall by removing these lines or running `tabtab uninstall electron-forge`
