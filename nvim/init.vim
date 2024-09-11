@@ -1,6 +1,7 @@
 " ==========================================================================
 " File:   (NEO) Vim Config File
 " Author: Matt Harrington
+" Focus:  Python and Jupyter Notebook Development
 " ==========================================================================
 
 " ----------------------------------------------------------
@@ -9,11 +10,9 @@
 call plug#begin()
 
 " Appearance
-Plug 'sonph/onehalf', {'rtp': 'vim/'}
 Plug 'morhetz/gruvbox'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'ryanoasis/vim-devicons'
 
 " Editing and Navigation
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -21,25 +20,17 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'luochen1990/rainbow'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'roman/golden-ratio'
 
-" Language Support
-Plug 'sheerun/vim-polyglot'
-Plug 'leafoftree/vim-vue-plugin'
-Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
-Plug 'elzr/vim-json'
-Plug 'chrisbra/csv.vim'
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
-Plug 'vim-pandoc/vim-pandoc-syntax'
+" Python-specific
+Plug 'vim-python/python-syntax'
+Plug 'Vimjas/vim-python-pep8-indent'
+Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+Plug 'jupyter-vim/jupyter-vim'
 
-" Misc
-Plug 'rizzatti/dash.vim'
+" Jupyter Notebook support
+Plug 'goerz/jupytext.vim'
 
 call plug#end()
 
@@ -101,8 +92,7 @@ try
   let g:gruvbox_improved_strings=1
 catch /.*/
   echo "Caught error when loading Gruvbox" . v:exception
-  echo "Switching to One Half colorscheme"
-  colorscheme onehalfdark
+  colorscheme default
 endtry
 
 set bg=dark
@@ -191,37 +181,38 @@ map <leader>nf :NERDTreeFind<cr>
 let g:NERDSpaceDelims = 1
 let g:NERDCompactSexyComs = 1
 let g:NERDDefaultAlign = 'left'
-let g:NERDAltDelims_java = 1
 let g:NERDCommentEmptyLines = 1
 let g:NERDTrimTrailingWhitespace = 1
 let g:NERDToggleCheckAllLines = 1
 
-" UltiSnips
-let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<c-tab>"
-let g:UltiSnipsSnippetsDir = $HOME."/.config/UltiSnips"
-let g:UltiSnipsSnippetDirectories = ['UltiSnips', $HOME.'/.config/UltiSnips']
-let g:UltiSnipsEnableSnipMate = 0
-
 " Rainbow Parentheses
 let g:rainbow_active = 1
-
-" Markdown Preview
-let g:mkdp_auto_close = 0
-autocmd FileType md nnoremap <c-m> :MarkdownPreview<CR>
-
-" Golden Ratio
-nnoremap <leader>tg :GoldenRatioToggle<CR>
 
 " COC
 nmap <leader>gd <Plug>(coc-definition)
 nmap <leader>gr <Plug>(coc-references)
 nnoremap <leader>cr :CocRestart<CR>
 
-" Vue
-let g:vue_pre_processors = ['pug', 'scss']
-autocmd BufRead,BufNewFile *.vue setf vue
+" Python Syntax
+let g:python_highlight_all = 1
+
+" Semshi (Python semantic highlighter)
+let g:semshi#mark_selected_nodes = 0
+let g:semshi#simplify_markup = v:true
+let g:semshi#error_sign = v:false
+
+" Jupyter-vim
+let g:jupyter_mapkeys = 0
+nnoremap <buffer> <silent> <localleader>r :JupyterRunFile<CR>
+nnoremap <buffer> <silent> <localleader>I :JupyterImportThisFile<CR>
+nnoremap <buffer> <silent> <localleader>e :JupyterSendCell<CR>
+nnoremap <buffer> <silent> <localleader>E :JupyterSendRange<CR>
+nmap     <buffer> <silent> <localleader>d <Plug>JupyterRunTextObj
+vmap     <buffer> <silent> <localleader>d <Plug>JupyterRunVisual
+
+" Jupytext
+let g:jupytext_fmt = 'py:percent'
+let g:jupytext_style = 'hydrogen'
 
 " ----------------------------------------------------------
 " Auto Commands
@@ -236,13 +227,12 @@ augroup AutoSaveFolds
   autocmd BufWinEnter ?* silent! loadview
 augroup end
 
-" File type specific settings
-autocmd FileType python compiler pylint
-autocmd Filetype python setlocal foldmethod=indent
-autocmd FileType html setlocal foldmethod=syntax
-autocmd FileType json setlocal foldmethod=syntax
-autocmd Filetype vim setlocal foldmethod=indent
-autocmd FileType jsx setlocal foldmethod=syntax
-autocmd FileType js setlocal foldmethod=syntax
-autocmd BufNewFile,BufRead *.vue set syntax
-autocmd FileType md nnoremap <c-m> :MarkdownPreview<CR>
+" Python-specific settings
+autocmd FileType python setlocal foldmethod=indent
+autocmd FileType python setlocal textwidth=88  " Match Black formatter's line length
+autocmd FileType python setlocal colorcolumn=88
+autocmd FileType python setlocal completeopt-=preview  " Disable preview window for completions
+
+" Jupyter Notebook settings
+autocmd BufNewFile,BufRead *.ipynb set filetype=jupyter
+autocmd FileType jupyter setlocal commentstring=# %s
